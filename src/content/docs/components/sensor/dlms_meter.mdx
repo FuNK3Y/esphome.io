@@ -60,18 +60,11 @@ descriptor pattern** that tells the system how to parse the incoming data.
 ### Multiple Meters
 
 One device can read several meters. Add one `dlms_meter` entry per meter, each with its own `id` and its own
-[UART bus](/components/uart/); two meters cannot share a UART. Then set `dlms_meter_id` on every sensor to choose
+[UART bus](/components/uart/); two meters cannot share a UART. The example below expects two UART buses with the IDs
+`uart_meter_1` and `uart_meter_2`. Then set `dlms_meter_id` on every sensor, text sensor and binary sensor to choose
 the meter it reads from.
 
 ```yaml
-uart:
-  - id: uart_meter_1
-    rx_pin: GPIOXX
-    baud_rate: 2400
-  - id: uart_meter_2
-    rx_pin: GPIOXX
-    baud_rate: 2400
-
 dlms_meter:
   - id: meter_1
     uart_id: uart_meter_1
@@ -99,7 +92,7 @@ All platforms (`sensor`, `text_sensor`, `binary_sensor`) support dynamic mapping
 This allows you to decode nearly any property your meter emits.
 
 - **dlms_meter_id** (*Optional*, [ID](/guides/configuration-types#id)): Manually specify the ID of the
-`dlms_meter` hub if you have multiple.
+`dlms_meter` hub if you have [multiple](#multiple-meters).
 - **obis_code** (**Required for dynamic mapping**, string): The OBIS code of the value you want to read. The code supports flexible formats
 like `1-0:32.7.0` or `1.0.32.7.0.255`.
 
